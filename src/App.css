@@ -133,3 +133,10 @@ input{
 .modal-header, .modal-footer{
   border: none;
 }
+
+.modal-img{
+  width: 100px;
+  position: absolute;
+  right: 40px;
+  top: -60px;
+}

@@ -64,12 +64,9 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
               var newScore = {
                   lives : scoreBoard.lives -1
               };
-
               setScoreBoard(newScore);
-              console.log(_newGameState);
               setGameState(_newGameState);
 
-        
               FlipRecentAfterDelay(600)
 
               if(newScore.lives <= 0){
@@ -111,12 +108,8 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                     completedCount++;
               });
               if(completedCount == numberOfTiles){
-                  console.log('123');
                  handleShow(true);
                }
-
-              console.log('cc:', completedCount);
-              console.log('numoftiels: ', numberOfTiles);
           
               setGameState(newGameState);
         }
@@ -171,8 +164,8 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                     </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>{modal.win
-                        ?  <span>You win! Well played.</span>  
-                        :  <span>Better luck next time!</span>
+                        ?   <><img className="modal-img" src={process.env.PUBLIC_URL + '/img/46.png'} /><span>You win! Well played.</span>  </>
+                        :  <><img className="modal-img" src={process.env.PUBLIC_URL + '/img/7.png'} /><span>Better luck next time!</span> </>
                     }
                     </Modal.Body>
                     <Modal.Footer>
