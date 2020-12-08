@@ -11,7 +11,6 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
         return {
             flippedTile : null,
             tiles : _tiles,
-            lock: false,
             lives : 3
         };
     });
@@ -20,6 +19,9 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
         lives: 3
     };
     const [scoreBoard, setScoreBoard] = useState(initialScoreBoard);
+    const [lock, setLock] = useState(() => {
+        return false;
+    });
 
     let initModal = {
         show: false,
@@ -32,6 +34,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
         show: false,
         win: false
     });
+    setScoreBoard(initialScoreBoard);
     startNewGame();
 
   }
@@ -43,11 +46,12 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
   }
 
     const flipTile = (_id, _matchGuid, _isBomb) => {
-        if(gameState.lock || (gameState.flippedTile !== null && _id === gameState.flippedTile.id)){
+        if(lock || (gameState.flippedTile !== null && _id === gameState.flippedTile.id)){
             return;
         }
 
-
+        setLock(true);
+        console.log('setlock true');
 
         if(_isBomb){
             const _newItems = gameState.tiles.map(item => {
@@ -58,20 +62,20 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
               });
               const _newGameState = {
                 flippedTile : null,
-                tiles : _newItems,
-                lock: true
+                tiles : _newItems
               };
               var newScore = {
                   lives : scoreBoard.lives -1
               };
-              setScoreBoard(newScore);
-              setGameState(_newGameState);
-
-              FlipRecentAfterDelay(600)
 
               if(newScore.lives <= 0){
                 handleShow(false);
+                return;
             }
+              setScoreBoard(newScore);
+              setGameState(_newGameState);
+
+              FlipRecentAfterDelay(500)
             
         }
         
@@ -84,10 +88,10 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
             });
             const newGameState = {
                 flippedTile : {id: _id, matchGuid: _matchGuid},
-                tiles : newItems,
-                lock: false
+                tiles : newItems
             };
             setGameState(newGameState);
+            setLock(false);
         }
         else if(gameState.flippedTile.matchGuid === _matchGuid){
             let completedCount = 0;
@@ -99,8 +103,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
               });
               const newGameState = {
                 flippedTile : null,
-                tiles : newItems,
-                lock: false
+                tiles : newItems
               };
 
               newItems.forEach(function(item){
@@ -112,6 +115,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                }
           
               setGameState(newGameState);
+              setLock(false);
         }
         else{
             const newItems = gameState.tiles.map(item => {
@@ -126,11 +130,11 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
               });
               const newGameState = {
                 flippedTile : null,
-                tiles : newItems,
-                lock: true
+                tiles : newItems
               };
               setGameState(newGameState);
               FlipRecentAfterDelay(2000);
+
         }
 
     }
@@ -149,6 +153,8 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                 lock: false
               };
               setGameState(_newGameState);
+              setLock(false);
+              console.log('setlock false');
         }, delay);
     }
 

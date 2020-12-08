@@ -31,7 +31,6 @@ function App() {
   }
 
   const startNewGame = () => {
-    setSettings(initialGameSettings);
     setReady(false);
   }
 
