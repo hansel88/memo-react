@@ -1,23 +1,43 @@
-import logo from './logo.svg';
+
 import './App.css';
+import MemoGameBoard from './MemoGameBoard';
+import UserControls from './UserControls';
+import React, { useState } from 'react';
 
 function App() {
+  const initialGameSettings = {
+    numOfTiles : 22,
+    includeBomb : true
+  }
+
+  const [settings, setSettings] = useState(initialGameSettings);
+  const [userReady, setReady] = useState(false);
+
+  const startGame = (_numOfTiles, _includeBomb) => {
+    const settings = {
+      numOfTiles: _numOfTiles,
+      includeBomb: _includeBomb
+    };
+    setSettings(settings);
+    setReady(true);
+  };
+
+  const updateSettings = (_numOfTiles, _includeBomb) => {
+    const settings = {
+      numOfTiles: _numOfTiles,
+      includeBomb: _includeBomb
+    };
+    setSettings(settings);
+  }
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+          {userReady ?  <MemoGameBoard numberOfTiles={settings.numOfTiles} includeBomb={settings.includeBomb} /> : 
+                        <UserControls numberOfTiles={settings.numOfTiles} includeBomb={settings.includeBomb} startGame={startGame} updateSettings={updateSettings}/>}
       </header>
+      
     </div>
   );
 }
