@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
 import MemoTile from './MemoTile';
 import ScoreBoard from './ScoreBoard';
 import GameBoardGenerator from './GameBoardGenerator';
 
-function MemoGameBoard({numberOfTiles = 30, includeBomb}){
+function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
 
     const [gameState, setGameState] = useState(() => {
         let _tiles = GameBoardGenerator.GenerateGameBoard(numberOfTiles, includeBomb);
@@ -20,6 +21,27 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb}){
     };
     const [scoreBoard, setScoreBoard] = useState(initialScoreBoard);
 
+    let initModal = {
+        show: false,
+        win: false
+    }
+    const [modal, setModal] = useState(initModal);
+
+  const startNew = function(){
+    setModal({
+        show: false,
+        win: false
+    });
+    startNewGame();
+
+  }
+  const handleShow = function(_win){
+    setModal({
+        show: true,
+        win: _win
+    });
+  }
+
     const flipTile = (_id, _matchGuid, _isBomb) => {
         if(gameState.lock || (gameState.flippedTile !== null && _id === gameState.flippedTile.id)){
             return;
@@ -32,9 +54,8 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb}){
                 if (item.isCompleted) {
                     return { ...item, isFlipped: true};
                 }
-                return { ...item, isFlipped: false};;
+                return { ...item, isFlipped: false};
               });
-              var x = gameState.lives -1;
               const _newGameState = {
                 flippedTile : null,
                 tiles : _newItems,
@@ -43,12 +64,17 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb}){
               var newScore = {
                   lives : scoreBoard.lives -1
               };
+
               setScoreBoard(newScore);
               console.log(_newGameState);
               setGameState(_newGameState);
 
         
               FlipRecentAfterDelay(600)
+
+              if(newScore.lives <= 0){
+                handleShow(false);
+            }
             
         }
         
@@ -67,6 +93,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb}){
             setGameState(newGameState);
         }
         else if(gameState.flippedTile.matchGuid === _matchGuid){
+            let completedCount = 0;
             const newItems = gameState.tiles.map(item => {
                 if (item.matchGuid === _matchGuid) {
                     return { ...item, isFlipped: true, isCompleted: true };
@@ -78,6 +105,19 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb}){
                 tiles : newItems,
                 lock: false
               };
+
+              newItems.forEach(function(item){
+                  if(item.isCompleted)
+                    completedCount++;
+              });
+              if(completedCount == numberOfTiles){
+                  console.log('123');
+                 handleShow(true);
+               }
+
+              console.log('cc:', completedCount);
+              console.log('numoftiels: ', numberOfTiles);
+          
               setGameState(newGameState);
         }
         else{
@@ -121,6 +161,28 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb}){
 
     return (
         <div className="memo-board">
+                <div>
+                <Modal animation={false} backdrop="static" show={modal.show}>
+                    <Modal.Header>
+                    <Modal.Title>{modal.win
+                        ?  <span>Congrats</span>  
+                        :  <span>Awww</span>
+                    }
+                    </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>{modal.win
+                        ?  <span>You win! Well played.</span>  
+                        :  <span>Better luck next time!</span>
+                    }
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <button id="new-btn" onClick={startNew}>
+                        Play again
+                    </button>
+
+                    </Modal.Footer>
+                </Modal>
+                </div>
             <ScoreBoard lives={scoreBoard.lives}/>
             <ul className="tile-list">
                 {gameState.tiles.map((tile, i) =>

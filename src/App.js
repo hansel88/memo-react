@@ -30,11 +30,16 @@ function App() {
     setSettings(settings);
   }
 
+  const startNewGame = () => {
+    setSettings(initialGameSettings);
+    setReady(false);
+  }
+
 
   return (
     <div className="App">
       <header className="App-header">
-          {userReady ?  <MemoGameBoard numberOfTiles={settings.numOfTiles} includeBomb={settings.includeBomb} /> : 
+          {userReady ?  <MemoGameBoard numberOfTiles={settings.numOfTiles} includeBomb={settings.includeBomb} startNewGame={startNewGame} /> : 
                         <UserControls numberOfTiles={settings.numOfTiles} includeBomb={settings.includeBomb} startGame={startGame} updateSettings={updateSettings}/>}
       </header>
       

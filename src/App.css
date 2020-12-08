@@ -122,4 +122,14 @@ input{
 
 #new-btn:hover{
   background-color: #0e0e0f;
+  cursor: pointer;
+}
+
+.modal-content{
+  background-color: #4438b4;
+  color: white;
+}
+
+.modal-header, .modal-footer{
+  border: none;
 }
