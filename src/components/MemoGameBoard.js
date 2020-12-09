@@ -29,7 +29,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
     }
     const [modal, setModal] = useState(initModal);
 
-  const startNew = function(){
+  const startNew = function(){ 
     setModal({
         show: false,
         win: false
@@ -57,24 +57,28 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                     return { ...item, isFlipped: true};
                 }
                 return { ...item, isFlipped: false};
-              });
-              const _newGameState = {
+            });
+            const _newGameState = {
                 flippedTile : null,
                 tiles : _newItems
-              };
-              var newScore = {
-                  lives : scoreBoard.lives -1
-              };
+            };
+            var newScore = {
+                lives : scoreBoard.lives -1
+            };
 
-              setScoreBoard(newScore);
+            setScoreBoard(newScore);
 
-              if(newScore.lives <= 0){
+            if(newScore.lives <= 0){
+                setGameState(_newGameState);
                 handleShow(false);
                 return;
+            } 
+            else{
+                setGameState(_newGameState);
+                FlipAfterDelay(600)
             }
-              setGameState(_newGameState);
 
-              FlipRecentAfterDelay(600)
+
             
         }
         
@@ -99,22 +103,22 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                     return { ...item, isFlipped: true, isCompleted: true };
                 }
                 return item;
-              });
-              const newGameState = {
+            });
+            const newGameState = {
                 flippedTile : null,
                 tiles : newItems
-              };
+            };
 
-              newItems.forEach(function(item){
-                  if(item.isCompleted)
-                    completedCount++;
-              });
-              if(completedCount == numberOfTiles){
-                 handleShow(true);
-               }
+            newItems.forEach(function(item){
+                if(item.isCompleted)
+                completedCount++;
+            });
+            if(completedCount == numberOfTiles){
+                handleShow(true);
+            }
           
-              setGameState(newGameState);
-              setLock(false);
+            setGameState(newGameState);
+            setLock(false);
         }
         else{
             const newItems = gameState.tiles.map(item => {
@@ -124,35 +128,34 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                 else if(item.id === _id || item.id === gameState.flippedTile.id){
                     return { ...item, isFlipped: true};
                 }
-                return { ...item, isFlipped: false};;
-    
+                return { ...item, isFlipped: false};
               });
               const newGameState = {
                 flippedTile : null,
                 tiles : newItems
               };
               setGameState(newGameState);
-              FlipRecentAfterDelay(2000);
+              FlipAfterDelay(2000);
 
         }
 
     }
 
-    const FlipRecentAfterDelay = function(delay){
+    const FlipAfterDelay = function(delay){
         setTimeout(() => {
             const _newItems = gameState.tiles.map(item => {
                 if (item.isCompleted) {
                     return { ...item, isFlipped: true};
                 }
                 return { ...item, isFlipped: false};;
-              });
-              const _newGameState = {
+            });
+            const _newGameState = {
                 flippedTile : null,
                 tiles : _newItems,
                 lock: false
-              };
-              setGameState(_newGameState);
-              setLock(false);
+            };
+            setGameState(_newGameState);
+            setLock(false);
         }, delay);
     }
 
