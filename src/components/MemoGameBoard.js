@@ -222,7 +222,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                     </Modal.Footer>
                 </Modal>
                 </div>
-            <ScoreBoard lives={scoreBoard.lives} time={scoreBoard.time} updateTime={updateTime} stopTime={scoreBoard.stopTime} />
+            <ScoreBoard lives={scoreBoard.lives} time={scoreBoard.time} updateTime={updateTime} stopTime={scoreBoard.stopTime} showLives={includeBomb} />
             <ul className="tile-list">
                 {gameState.tiles.map((tile, i) =>
                 <li key={'li' + i}>

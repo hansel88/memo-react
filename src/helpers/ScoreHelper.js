@@ -14,7 +14,7 @@ const ScoreHelper = (function() {
 
         let timeSpentPerTile = secondsSpent / totalTiles;
 
-        let score = completedRatio * (100 / timeSpentPerTile) * (totalTiles * 5) ;
+        let score = (10 * completedRatio) * (100 / timeSpentPerTile) * (totalTiles * 5) ;
 
         if(includeBomb){
             score = score * livesLeft * 1.2;

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import TimeHelper from '../helpers/timeHelper';
 
-function ScoreBoard( {lives, updateTime, stopTime = false} ){
+function ScoreBoard( {lives, updateTime, stopTime = false, showLives} ){
 
     const [formattedTime, setFormattedTime] = useState(() => {
         return "00:00";
@@ -28,7 +28,7 @@ function ScoreBoard( {lives, updateTime, stopTime = false} ){
         <>
         <div className="scoreboard col-12">
             <span className="time">Time: {formattedTime} </span>
-            <span className="lives">Lives left: {lives}</span>
+            {showLives ? <span className="lives">Lives left: {lives}</span> : <></>}
         </div>
 
         </>
