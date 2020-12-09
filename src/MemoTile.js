@@ -1,8 +1,9 @@
 import React from 'react';
+import ReactCardFlip from 'react-card-flip';
 var classNames = require('classnames');
 
 
-function MemoTile({id, imgSrc, matchGuid, isFlipped, isCompleted, flip, isBomb}){
+function MemoTile({id, imgSrc, matchGuid, isFlipped, isCompleted, flip, isBomb, setIsFlipped}){
     const flipThis = () => flip(id, matchGuid, isBomb);
 
     var classes = classNames({
@@ -14,12 +15,17 @@ function MemoTile({id, imgSrc, matchGuid, isFlipped, isCompleted, flip, isBomb})
       });
 
     return (
-        <div className={ classes } onClick={flipThis}>  
-            {isFlipped
-                ?  <img alt="tile" src={process.env.PUBLIC_URL + imgSrc} /> 
-                : <></>
-            }
+       <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
+        <div onClick={flipThis} className={classes}>
+            
+          
         </div>
+ 
+        <div className={classes}>
+            <img alt="tile" src={process.env.PUBLIC_URL + imgSrc} /> 
+          
+        </div>
+      </ReactCardFlip>
     )
 }
 

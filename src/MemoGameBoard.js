@@ -69,7 +69,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
               };
 
               setScoreBoard(newScore);
-              
+
               if(newScore.lives <= 0){
                 handleShow(false);
                 return;
