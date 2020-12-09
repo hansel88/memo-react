@@ -6,15 +6,15 @@ const ScoreHelper = (function() {
         if(livesLeft == 0)
             livesLeft = 1;
 
-        let x = completedTiles / totalTiles;
+        let completedRatio = completedTiles / totalTiles;
 
-        if(x == 1){
-            x = 2;
+        if(completedRatio == 1){
+            completedRatio = 2;
         }
 
         let timeSpentPerTile = secondsSpent / totalTiles;
 
-        let score = x * (100 / timeSpentPerTile) * (totalTiles * 1.8) ;
+        let score = completedRatio * (100 / timeSpentPerTile) * (totalTiles * 5) ;
 
         if(includeBomb){
             score = score * livesLeft * 1.2;

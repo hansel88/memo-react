@@ -44,6 +44,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
         show: false,
         win: false
     });
+    setFinalScore(null);
     setScoreBoard(initialScoreBoard);
     startNewGame();
   }
