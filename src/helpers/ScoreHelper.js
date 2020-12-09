@@ -2,7 +2,7 @@ import React, {useEffect, useRef } from 'react';
 
 const ScoreHelper = (function() {
 
-    function getFinalScore(secondsSpent, completedTiles, totalTiles, livesLeft) {   
+    function getFinalScore(secondsSpent, completedTiles, totalTiles, livesLeft, includeBomb) {   
         if(livesLeft == 0)
             livesLeft = 1;
 
@@ -14,7 +14,11 @@ const ScoreHelper = (function() {
 
         let timeSpentPerTile = secondsSpent / totalTiles;
 
-        let score = x * (100 / timeSpentPerTile) * livesLeft * totalTiles;
+        let score = x * (100 / timeSpentPerTile) * (totalTiles * 1.8) ;
+
+        if(includeBomb){
+            score = score * livesLeft * 1.2;
+        }
 
         return Math.floor(score);
     }

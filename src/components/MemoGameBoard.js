@@ -59,7 +59,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
         let tilesCompleted = gameState.tiles.filter((obj) => obj.isCompleted === true).length;
 
         if(!finalScore){
-            setFinalScore(ScoreHelper.getFinalScore(scoreBoard.time, tilesCompleted, numberOfTiles, scoreBoard.lives));
+            setFinalScore(ScoreHelper.getFinalScore(scoreBoard.time, tilesCompleted, numberOfTiles, scoreBoard.lives, includeBomb));
         }
 
         setScoreBoard({
