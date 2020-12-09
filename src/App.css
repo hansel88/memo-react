@@ -42,8 +42,8 @@
 }
 
 .memo-tile{
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   margin-right: 12px;
   margin-bottom: 12px;
 }
@@ -151,4 +151,21 @@ input{
   position: absolute;
   right: 40px;
   top: -60px;
+}
+
+
+.scoreboard{
+  width: 400px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+.scoreboard .time{
+  display: inline-block;
+  float: left;
+}
+
+.scoreboard .lives{
+  display: inline-block;
+  float: right;
 }

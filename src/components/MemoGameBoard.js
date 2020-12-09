@@ -16,9 +16,13 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
     });
 
     let initialScoreBoard = {
-        lives: 3
+        lives: 3,
+        time: 0
     };
-    const [scoreBoard, setScoreBoard] = useState(initialScoreBoard);
+    const [scoreBoard, setScoreBoard] = useState(() => {
+        return initialScoreBoard;
+    });
+
     const [lock, setLock] = useState(() => {
         return false;
     });
@@ -36,8 +40,16 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
     });
     setScoreBoard(initialScoreBoard);
     startNewGame();
-
   }
+
+  const updateTime = function(secs){
+      console.log('secs: ', secs);
+      setScoreBoard({
+          lives: scoreBoard.lives,
+          time: secs
+      });
+  }
+
   const handleShow = function(_win){
     setModal({
         show: true,
@@ -167,7 +179,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                     <Modal.Title>{modal.win
                         ?  <span>Congrats</span>  
                         :  <span>Awww</span>
-                    }
+                    } <p>You spent {ScoreBoard.time} seconds</p>
                     </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>{modal.win
@@ -183,7 +195,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                     </Modal.Footer>
                 </Modal>
                 </div>
-            <ScoreBoard lives={scoreBoard.lives}/>
+            <ScoreBoard lives={scoreBoard.lives} time={scoreBoard.time} updateTime={updateTime} />
             <ul className="tile-list">
                 {gameState.tiles.map((tile, i) =>
                 <li key={'li' + i}>
