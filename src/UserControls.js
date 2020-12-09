@@ -22,6 +22,8 @@ function UserControls({includeBomb, numberOfTiles, startGame, updateSettings}){
 
     return (
         <div>
+
+            <h1 className="mb-5" >Memo</h1>
  
             <TextField id="standard-basic" label="Number of tiles" type="number" inputProps={inputProps}  value={numberOfTiles} onChange={event => {
                     const { value } = event.target;

@@ -49,13 +49,11 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
         if(lock || (gameState.flippedTile !== null && _id === gameState.flippedTile.id)){
             return;
         }
-
         setLock(true);
-        console.log('setlock true');
 
         if(_isBomb){
             const _newItems = gameState.tiles.map(item => {
-                if (item.isCompleted) {
+                if (item.isCompleted || item.isBomb) {
                     return { ...item, isFlipped: true};
                 }
                 return { ...item, isFlipped: false};
@@ -80,7 +78,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
             
         }
         
-        if(gameState.flippedTile == null){
+        else if(gameState.flippedTile == null){
             const newItems = gameState.tiles.map(item => {
                 if (item.id === _id) {
                     return { ...item, isFlipped: true };
@@ -155,7 +153,6 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
               };
               setGameState(_newGameState);
               setLock(false);
-              console.log('setlock false');
         }, delay);
     }
 
