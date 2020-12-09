@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import TimeHelper from '../helpers/timeHelper';
 
-function ScoreBoard( {lives, updateTime} ){
+function ScoreBoard( {lives, updateTime, stopTime = false} ){
 
     const [formattedTime, setFormattedTime] = useState(() => {
         return "00:00";
@@ -12,9 +12,14 @@ function ScoreBoard( {lives, updateTime} ){
     })
 
     const tick = function(){
-        setSeconds(seconds +1);
-        updateTime(seconds);
-        setFormattedTime(TimeHelper.getFormattedTime(seconds));
+        if(!stopTime){
+            setSeconds(seconds +1);
+            updateTime(seconds);
+            setFormattedTime(TimeHelper.getFormattedTime(seconds));
+        }else{
+            setSeconds(seconds);
+            updateTime(seconds);
+        }
     }
 
     TimeHelper.useInterval(tick, 1000);

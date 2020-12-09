@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import MemoTile from './MemoTile';
 import ScoreBoard from './ScoreBoard';
 import GameBoardGenerator from '../helpers/GameBoardGenerator';
+import ScoreHelper from '../helpers/ScoreHelper';
 
 function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
 
@@ -17,10 +18,15 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
 
     let initialScoreBoard = {
         lives: 3,
-        time: 0
+        time: 0,
+        stopTime : false
     };
     const [scoreBoard, setScoreBoard] = useState(() => {
         return initialScoreBoard;
+    });
+
+    const [finalScore, setFinalScore] = useState(() =>{
+        return null;
     });
 
     const [lock, setLock] = useState(() => {
@@ -43,14 +49,33 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
   }
 
   const updateTime = function(secs){
-      console.log('secs: ', secs);
-      setScoreBoard({
-          lives: scoreBoard.lives,
-          time: secs
-      });
+      if(!scoreBoard.stopTime){
+        setScoreBoard({
+            lives: scoreBoard.lives,
+            time: secs,
+            stopTime: false
+        });
+      }else{
+        let tilesCompleted = gameState.tiles.filter((obj) => obj.isCompleted === true).length;
+
+        if(!finalScore){
+            setFinalScore(ScoreHelper.getFinalScore(scoreBoard.time, tilesCompleted, numberOfTiles, scoreBoard.lives));
+        }
+
+        setScoreBoard({
+            stopTime: true,
+            time: secs -1,
+            lives: scoreBoard.lives
+        });
+      }
   }
 
   const handleShow = function(_win){
+      setScoreBoard({
+          stopTime: true,
+          time: scoreBoard.time,
+          lives: scoreBoard.lives
+      })
     setModal({
         show: true,
         win: _win
@@ -179,7 +204,8 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                     <Modal.Title>{modal.win
                         ?  <span>Congrats</span>  
                         :  <span>Awww</span>
-                    } <p>You spent {ScoreBoard.time} seconds</p>
+                    } 
+                    <p>Your score: {finalScore}</p>
                     </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>{modal.win
@@ -195,7 +221,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                     </Modal.Footer>
                 </Modal>
                 </div>
-            <ScoreBoard lives={scoreBoard.lives} time={scoreBoard.time} updateTime={updateTime} />
+            <ScoreBoard lives={scoreBoard.lives} time={scoreBoard.time} updateTime={updateTime} stopTime={scoreBoard.stopTime} />
             <ul className="tile-list">
                 {gameState.tiles.map((tile, i) =>
                 <li key={'li' + i}>
