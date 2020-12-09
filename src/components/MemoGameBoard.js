@@ -74,7 +74,7 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
             }
               setGameState(_newGameState);
 
-              FlipRecentAfterDelay(500)
+              FlipRecentAfterDelay(600)
             
         }
         
