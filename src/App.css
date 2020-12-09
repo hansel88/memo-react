@@ -117,7 +117,10 @@ input{
   color: white;
   background-color: #17191b;
   width: 200px;
+  padding: 8px 0;
+  border-radius: 4px;;
   float: right;
+  border: none;
 }
 
 #new-btn:hover{
