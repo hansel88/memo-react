@@ -12,7 +12,13 @@ function UserControls({includeBomb, numberOfTiles, startGame, updateSettings}){
         updateSettings(newVal, includeBomb);
     }
 
-    const start = () => startGame(numberOfTiles, includeBomb);
+    const start = () => {
+        if(numberOfTiles % 2 !== 0){
+            numberOfTiles++;
+        }
+        startGame(numberOfTiles, includeBomb);
+    }
+    
 
     const inputProps = {
         step: 2,

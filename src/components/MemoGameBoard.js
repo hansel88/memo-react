@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import MemoTile from './MemoTile';
 import ScoreBoard from './ScoreBoard';
-import GameBoardGenerator from './GameBoardGenerator';
+import GameBoardGenerator from '../helpers/GameBoardGenerator';
 
 function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
 

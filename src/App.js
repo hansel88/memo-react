@@ -1,7 +1,7 @@
 
 import './App.css';
-import MemoGameBoard from './MemoGameBoard';
-import UserControls from './UserControls';
+import MemoGameBoard from './components/MemoGameBoard';
+import UserControls from './components/UserControls';
 import React, { useState } from 'react';
 
 function App() {

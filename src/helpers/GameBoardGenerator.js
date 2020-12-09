@@ -39,20 +39,7 @@ const GameBoardGenerator = (function() {
         return array;
       }
   
-    function generateGameBoard(numberOfTiles, includeBomb) {
-        //TODO add validation in ui
-        if(numberOfTiles > 50){
-            numberOfTiles = 50;
-        }
-    
-        if(numberOfTiles < 10){
-            numberOfTiles = 10;
-        }
-    
-        if(numberOfTiles % 2 !== 0){
-            numberOfTiles++;
-        }
-    
+    function generateGameBoard(numberOfTiles, includeBomb) {    
         let _tiles = [];
     
         let first = true;
