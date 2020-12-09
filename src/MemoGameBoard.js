@@ -68,11 +68,12 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
                   lives : scoreBoard.lives -1
               };
 
+              setScoreBoard(newScore);
+              
               if(newScore.lives <= 0){
                 handleShow(false);
                 return;
             }
-              setScoreBoard(newScore);
               setGameState(_newGameState);
 
               FlipRecentAfterDelay(500)
@@ -159,9 +160,9 @@ function MemoGameBoard({numberOfTiles = 30, includeBomb, startNewGame}){
     }
 
     return (
-        <div className="memo-board">
+        <div className="memo-board col-12">
                 <div>
-                <Modal animation={false} backdrop="static" show={modal.show}>
+                <Modal centered={true} animation={false} backdrop="static" show={modal.show}>
                     <Modal.Header>
                     <Modal.Title>{modal.win
                         ?  <span>Congrats</span>  
