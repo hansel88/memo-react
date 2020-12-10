@@ -31,7 +31,8 @@ function App() {
   }
 
   const startNewGame = () => {
-    setReady(false);
+    window.location.reload();
+
   }
 
 
